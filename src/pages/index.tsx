@@ -1,18 +1,22 @@
-import React, { Component, lazy } from 'react';
+import React, { Component } from 'react';
 import { Route, Routes } from 'react-router-dom';
-
-const MainPage = lazy(() => import('./Main'));
-const AboutUsPage = lazy(() => import('./AboutUs'));
-const NotFound = lazy(() => import('./NotFound'));
+import Main from './main';
+import AboutUs from './about-us';
+import NotFound from './not-found';
+import { Header } from '../widgets/header';
+import { MAIN_PAGE, ABOUT_PAGE } from '../shared/const/routes';
 
 class Routing extends Component {
   render() {
     return (
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/about" element={<AboutUsPage />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <>
+        <Header />
+        <Routes>
+          <Route path={MAIN_PAGE} element={<Main />} />
+          <Route path={ABOUT_PAGE} element={<AboutUs />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </>
     );
   }
 }
