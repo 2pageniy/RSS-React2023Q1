@@ -1,2 +1,4 @@
-export const MAIN_PAGE = '/';
-export const ABOUT_PAGE = '/about';
+export enum RoutesEnum {
+  Main = '/',
+  About = '/about',
+}

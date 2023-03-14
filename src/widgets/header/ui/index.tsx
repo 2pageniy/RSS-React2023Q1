@@ -1,14 +1,31 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import cl from './style.module.css';
-import { ABOUT_PAGE, MAIN_PAGE } from '../../../shared/const/routes';
+import { RoutesEnum } from '../../../shared/const/routes';
 
-export class Header extends Component {
+interface HeaderProps {
+  path: string;
+}
+
+export class Header extends Component<HeaderProps> {
+  shouldComponentUpdate(nextProps: Readonly<HeaderProps>): boolean {
+    if (this.props.path !== nextProps.path) {
+      return true;
+    }
+    return false;
+  }
   render() {
     return (
       <header className={cl.header}>
-        <Link to={MAIN_PAGE}>Main</Link>
-        <Link to={ABOUT_PAGE}>About us</Link>
+        <h1>{Object.entries(RoutesEnum).find((item) => item[1] === this.props.path)?.[0]}</h1>
+        <nav className={cl.nav}>
+          <NavLink className={({ isActive }) => (isActive ? cl.active : '')} to={RoutesEnum.Main}>
+            Main
+          </NavLink>
+          <NavLink className={({ isActive }) => (isActive ? cl.active : '')} to={RoutesEnum.About}>
+            About us
+          </NavLink>
+        </nav>
       </header>
     );
   }

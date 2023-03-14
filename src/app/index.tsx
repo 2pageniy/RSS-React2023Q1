@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
-import { BrowserRouter } from 'react-router-dom';
 import { Header } from '../widgets/header';
 import Routing from '../pages';
 import './index.css';
+import { withRouter, WithRouterProps } from './providers/with-router';
 
-class App extends Component {
+class App extends Component<WithRouterProps> {
   render() {
     return (
-      <BrowserRouter>
-        <Header />
+      <>
+        <Header path={this.props.location.pathname} />
         <Routing />
-      </BrowserRouter>
+      </>
     );
   }
 }
 
-export default App;
+export default withRouter(App);
