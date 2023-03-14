@@ -9,7 +9,7 @@ interface ButtonProps {
 export class Button extends Component<ButtonProps> {
   render() {
     return (
-      <button type="button" className={cl.btn}>
+      <button type="button" className={cl.btn} onClick={this.props.onClick}>
         {this.props.children}
       </button>
     );
