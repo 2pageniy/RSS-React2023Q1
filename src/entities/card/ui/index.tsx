@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
 import cl from './style.module.css';
-import { restrictCharacters } from '../lib/restrictСharacters';
-
-export interface ICard {
-  img: string;
-  title: string;
-  creator: string;
-  tags: string[];
-  date: string;
-}
+import { restrictCharacters } from '../lib/restrict-characters';
+import { ICard } from '../interface';
 export class Card extends Component<ICard> {
   render() {
     return (

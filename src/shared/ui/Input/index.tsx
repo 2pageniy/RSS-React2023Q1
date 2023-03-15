@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
+import { InputProps } from './interface';
 import cl from './style.module.css';
-
-interface InputProps {
-  type?: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  value: string;
-  placeholder: string;
-}
 
 export class Input extends Component<InputProps> {
   render() {

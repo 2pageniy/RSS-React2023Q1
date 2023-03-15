@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Input } from '../../../shared/ui';
+import cl from './style.module.css';
 
 export class SearchBar extends Component<Record<string, never>, { searchText: string }> {
   state = {
@@ -27,10 +28,10 @@ export class SearchBar extends Component<Record<string, never>, { searchText: st
 
   render() {
     return (
-      <>
+      <div className={cl['search-bar']}>
         <Input placeholder="Search" value={this.state.searchText} onChange={this.handleChange} />
         <Button onClick={this.handleClick}>Search</Button>
-      </>
+      </div>
     );
   }
 }

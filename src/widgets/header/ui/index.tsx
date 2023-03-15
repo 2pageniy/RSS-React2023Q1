@@ -3,10 +3,7 @@ import { NavLink } from 'react-router-dom';
 import cl from './style.module.css';
 import { RoutesEnum } from '../../../shared/const/routes';
 import { findPath } from '../lib/findPath';
-
-interface HeaderProps {
-  path: string;
-}
+import { HeaderProps } from '../interface';
 
 export class Header extends Component<HeaderProps> {
   shouldComponentUpdate(nextProps: Readonly<HeaderProps>): boolean {
