@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header } from '../widgets/header';
+import { Header } from '../widgets';
 import Routing from '../pages';
 import './index.css';
 import { withRouter, WithRouterProps } from './providers/with-router';

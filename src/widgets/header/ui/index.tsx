@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import cl from './style.module.css';
 import { RoutesEnum } from '../../../shared/const/routes';
+import { findPath } from '../lib/findPath';
 
 interface HeaderProps {
   path: string;
@@ -17,7 +18,7 @@ export class Header extends Component<HeaderProps> {
   render() {
     return (
       <header className={cl.header}>
-        <h1>{Object.entries(RoutesEnum).find((item) => item[1] === this.props.path)?.[0]}</h1>
+        <h1>{findPath(this.props.path)}</h1>
         <nav className={cl.nav}>
           <NavLink className={({ isActive }) => (isActive ? cl.active : '')} to={RoutesEnum.Main}>
             Main
