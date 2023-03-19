@@ -28,7 +28,7 @@ export class SearchBar extends Component<Record<string, never>, { searchText: st
 
   render() {
     return (
-      <div className={cl['search-bar']}>
+      <div className={cl['search-bar']} data-testid={'search-bar'}>
         <Input placeholder="Search" value={this.state.searchText} onChange={this.handleChange} />
         <Button onClick={this.handleClick}>Search</Button>
       </div>

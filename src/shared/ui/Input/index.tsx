@@ -11,6 +11,7 @@ export class Input extends Component<InputProps> {
         value={this.props.value}
         onChange={this.props.onChange}
         placeholder={this.props.placeholder}
+        data-testid={'input'}
       />
     );
   }

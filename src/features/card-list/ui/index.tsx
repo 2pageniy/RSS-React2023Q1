@@ -6,7 +6,7 @@ import { cardList } from '../consts';
 export class CardList extends Component {
   render() {
     return (
-      <div className={cl['card-list']}>
+      <div className={cl['card-list']} data-testid="card-list">
         {cardList.map((card) => (
           <Card
             key={card.date}
