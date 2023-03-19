@@ -1,0 +1,36 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  height: 60px;
+  padding: 0 20px;
+  margin: 0 0 20px 0;
+  background-color: black;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header a {
+  display: block;
+  color: inherit;
+  padding: 20px 0;
+  text-decoration: none;
+  margin-right: 10px;
+}
+
+.header a:hover {
+  color: orange;
+}
+
+.header a:active {
+  color: rgb(202, 133, 4);
+}
+
+a.active {
+  color: rgb(0, 255, 174);
+}
