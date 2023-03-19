@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { InputProps } from './interface';
 import cl from './style.module.css';
+import { InputProps } from './interface';
 
 export class Input extends Component<InputProps> {
   render() {

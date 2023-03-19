@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { ButtonProps } from './interface';
 import cl from './style.module.css';
+import { ButtonProps } from './interface';
 
 export class Button extends Component<ButtonProps> {
   render() {

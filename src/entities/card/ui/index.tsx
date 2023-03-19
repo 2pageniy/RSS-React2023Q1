@@ -18,7 +18,7 @@ export class Card extends Component<ICard> {
             {this.props.title}
           </p>
           <p className={cl.creator} data-testid={'card-creator'}>
-            Added by
+            {'Added by '}
             <span className={cl.name} data-testid={'card-name'}>
               {this.props.creator}
             </span>

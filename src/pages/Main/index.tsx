@@ -1,6 +1,5 @@
-import { CardList } from '../../features';
 import React, { Component } from 'react';
-import { SearchBar } from '../../features/search-bar';
+import { CardList, SearchBar } from '../../features';
 
 export class Main extends Component {
   render() {

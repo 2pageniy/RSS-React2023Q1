@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import cl from './style.module.css';
-import { RoutesEnum } from '../../../shared/const/routes';
 import { findPath } from '../lib/findPath';
 import { HeaderProps } from '../interface';
+import { RoutesEnum } from '../../../shared/const/routes';
 
 export class Header extends Component<HeaderProps> {
   shouldComponentUpdate(nextProps: Readonly<HeaderProps>): boolean {

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Button, Input } from '../../../shared/ui';
 import cl from './style.module.css';
+import { SearchBarProps } from '../interface';
 
-export class SearchBar extends Component<Record<string, never>, { searchText: string }> {
+export class SearchBar extends Component<Record<string, never>, SearchBarProps> {
   state = {
     searchText: '',
   };
