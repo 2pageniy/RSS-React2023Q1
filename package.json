@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
+    "lint": "eslint src/",
     "preview": "vite preview",
-    "lint": "eslint --fix .",
     "prepare": "husky install",
     "test": "vitest --coverage",
     "precommit": "lint-staged"
