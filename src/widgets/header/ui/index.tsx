@@ -23,6 +23,9 @@ export class Header extends Component<HeaderProps> {
           <NavLink className={({ isActive }) => (isActive ? cl.active : '')} to={RoutesEnum.About}>
             About us
           </NavLink>
+          <NavLink className={({ isActive }) => (isActive ? cl.active : '')} to={RoutesEnum.Form}>
+            Form
+          </NavLink>
         </nav>
       </header>
     );
