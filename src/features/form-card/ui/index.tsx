@@ -78,7 +78,7 @@ export class FormCard extends Component<FormCardProps, FormCardState> {
   render() {
     return (
       <>
-        <form onSubmit={this.submitForm} className={cl.form}>
+        <form onSubmit={this.submitForm} className={cl.form} data-testid="form">
           <Input
             placeholder={'Title...'}
             inputRef={this.inputTitle}
@@ -97,7 +97,7 @@ export class FormCard extends Component<FormCardProps, FormCardState> {
           <p>
             <label>
               Choose a country: <br />
-              <select name="country" id="country" ref={this.select}>
+              <select name="country" id="country" ref={this.select} data-testid="select">
                 <option value="russia">Russia</option>
                 <option value="usa">USA</option>
                 <option value="china">China</option>
