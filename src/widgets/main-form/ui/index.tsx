@@ -9,7 +9,6 @@ export class MainForm extends Component {
   };
 
   addCard = (card: ICard) => {
-    console.log(1);
     this.setState({ cards: [...this.state.cards, card] });
   };
 

@@ -62,7 +62,7 @@ export class FormCard extends Component<FormCardProps, FormCardState> {
     }
 
     e.currentTarget.reset();
-
+    alert('The card was created successfully');
     const newCard: ICard = {
       title,
       date,
