@@ -1,0 +1,13 @@
+.form {
+  width: 500px;
+  margin: 0 auto;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid;
+  border-radius: 5px;
+}
+
+p {
+  margin: 10px 0;
+}
