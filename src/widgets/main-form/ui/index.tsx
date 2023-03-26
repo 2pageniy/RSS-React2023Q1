@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { CardList, FormCard } from '../../../features';
+import { MainFormProps } from '../interface';
 import { ICard } from '../../../entities/card/interface';
-
-interface MainFormProps {
-  cards: ICard[];
-}
 
 export class MainForm extends Component {
   state: MainFormProps = {

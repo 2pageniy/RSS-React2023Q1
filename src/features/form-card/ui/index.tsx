@@ -1,24 +1,9 @@
 import React, { Component, createRef } from 'react';
 import { Button, Input } from '../../../shared/ui';
 import cl from './style.module.css';
+import { FormCardProps, FormCardState, ValidFields } from '../interface';
 import { ICard } from '../../../entities/card/interface';
 
-interface FormCardProps {
-  addCard: (card: ICard) => void;
-}
-
-interface ValidFields {
-  [index: string]: boolean;
-  title: boolean;
-  date: boolean;
-  gender: boolean;
-  tags: boolean;
-  agreement: boolean;
-  image: boolean;
-}
-interface FormCardState {
-  valid: ValidFields;
-}
 export class FormCard extends Component<FormCardProps, FormCardState> {
   state: FormCardState = {
     valid: {

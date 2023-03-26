@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import { Card } from '../../../entities';
 import cl from './style.module.css';
 import { cardList } from '../consts';
-import { ICard } from 'entities/card/interface';
-
-interface CardListProps {
-  cards?: ICard[];
-}
+import { CardListProps } from '../interface';
 
 export class CardList extends Component<CardListProps> {
   shouldComponentUpdate(nextProps: Readonly<CardListProps>): boolean {
