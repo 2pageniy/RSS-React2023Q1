@@ -1,9 +1,18 @@
 .input {
   border: 1px solid gray;
-  border-radius: 20px;
+  border-radius: 5px;
   padding: 8px 20px;
+  margin: 5px;
   font-size: inherit;
   box-shadow: inset 0px 2px 5px -2px gray;
+}
+
+.label {
+  margin: 5px 0;
+}
+
+.up-text {
+  margin-left: 20px;
 }
 
 .input:hover {
@@ -13,4 +22,9 @@
 .input:focus {
   outline: none;
   box-shadow: 0px 2px 5px -2px gray;
+}
+
+input[type=radio].input {
+  opacity: 1;
+  box-shadow: none;
 }

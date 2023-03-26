@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-import { FormCard } from '../../features';
+import { MainForm } from '../../widgets';
 
 export class Form extends Component {
   render() {
-    return (
-      <>
-        <FormCard />
-      </>
-    );
+    return <MainForm />;
   }
 }
 

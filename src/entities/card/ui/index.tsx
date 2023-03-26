@@ -20,8 +20,9 @@ export class Card extends Component<ICard> {
           <p className={cl.creator} data-testid={'card-creator'}>
             {'Added by '}
             <span className={cl.name} data-testid={'card-name'}>
-              {this.props.creator}
+              {this.props.gender}
             </span>
+            {` from ${this.props.country}`}
           </p>
           <p className={cl.tags} data-testid={'card-tags'}>
             {restrictCharacters(this.props.tags)}

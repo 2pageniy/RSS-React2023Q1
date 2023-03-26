@@ -1,21 +1,19 @@
 import React, { Component, createRef } from 'react';
+import { Button, Input } from '../../../shared/ui';
 import cl from './style.module.css';
+import { ICard } from '../../../entities/card/interface';
 
-interface Card {
-  title: string;
-  date: string;
-  country: string;
-  gender: boolean;
-  image: string;
+interface FormCardProps {
+  addCard: (card: ICard) => void;
 }
-
-export class FormCard extends Component {
-  state: { cards: Card[] } = {
+export class FormCard extends Component<FormCardProps> {
+  state: { cards: ICard[] } = {
     cards: [],
   };
 
   private inputTitle = createRef<HTMLInputElement>();
   private inputDate = createRef<HTMLInputElement>();
+  private inputTags = createRef<HTMLParagraphElement>();
   private select = createRef<HTMLSelectElement>();
   private inputCheck = createRef<HTMLInputElement>();
   private inputRadio = createRef<HTMLInputElement>();
@@ -26,55 +24,68 @@ export class FormCard extends Component {
     const title = (this.inputTitle.current as HTMLInputElement).value;
     const date = (this.inputDate.current as HTMLInputElement).value;
     const country = (this.select.current as HTMLSelectElement).value;
-    const gender = (this.inputRadio.current as HTMLInputElement).checked;
+    const gender = (this.inputRadio.current as HTMLInputElement).checked ? 'Male' : 'Female';
     const image = ((this.inputImage.current as HTMLInputElement).files as FileList)[0];
+    const blockTags = this.inputTags.current as HTMLParagraphElement;
+
+    const tags: string[] = [];
+
+    for (let i = 1; i < blockTags.children.length; i++) {
+      const currentLabel = blockTags.children[i] as HTMLLabelElement;
+      if ((currentLabel.children[0] as HTMLInputElement).checked) {
+        tags.push(currentLabel.textContent || '');
+      }
+    }
     e.currentTarget.reset();
 
-    const newCard = {
+    const newCard: ICard = {
       title,
       date,
       country,
       gender,
-      image: window.URL.createObjectURL(image),
+      tags,
+      img: window.URL.createObjectURL(image),
     };
 
-    console.log(title, date, country, gender);
-
-    this.setState({
-      cards: [...this.state.cards, newCard],
-    });
+    this.props.addCard(newCard);
   };
 
   render() {
     return (
       <>
         <form onSubmit={this.submitForm} className={cl.form}>
-          <input type="text" ref={this.inputTitle} />
-          <input type="date" ref={this.inputDate} />
-          <select name="country" id="country" ref={this.select}>
-            <option value="russia">Russia</option>
-            <option value="usa">USA</option>
-            <option value="china">China</option>
-            <option value="japan">Japan</option>
-          </select>
-          <input type="radio" name="gender" ref={this.inputRadio} />
-          <input type="radio" name="gender" />
-          <label htmlFor="agreement">
-            I won&apos;t be upset that no one will see these cards
-            <input type="checkbox" id="agreement" ref={this.inputCheck} />
-          </label>
-          <input type="file" ref={this.inputImage} />
-          <input type="submit" />
+          <Input placeholder={'Title...'} inputRef={this.inputTitle} upText={'Title:'} />
+          <Input type="date" placeholder="date" inputRef={this.inputDate} upText={'Date:'} />
+          <p>
+            <label>
+              Choose a country: <br />
+              <select name="country" id="country" ref={this.select}>
+                <option value="russia">Russia</option>
+                <option value="usa">USA</option>
+                <option value="china">China</option>
+                <option value="japan">Japan</option>
+              </select>
+            </label>
+          </p>
+          Choose a gender:
+          <Input type="radio" name="gender" inputRef={this.inputRadio} rightText={'Male'} />
+          <Input type="radio" name="gender" rightText={'Female'} />
+          <p ref={this.inputTags}>
+            Choose a tags:
+            <br />
+            <Input type="checkbox" inputRef={this.inputCheck} rightText={'Art Design'} />
+            <Input type="checkbox" inputRef={this.inputCheck} rightText={'Animation'} />
+            <Input type="checkbox" inputRef={this.inputCheck} rightText={'Photography'} />
+            <Input type="checkbox" inputRef={this.inputCheck} rightText={'Illustration'} />
+          </p>
+          <Input
+            type="checkbox"
+            inputRef={this.inputCheck}
+            rightText="I won't be upset that no one will see these cards"
+          />
+          <Input type="file" inputRef={this.inputImage} />
+          <Button type="submit">Submit</Button>
         </form>
-        {this.state.cards.map((card, index) => (
-          <div key={index}>
-            <img src={card.image} alt="image" />
-            <p>{card.title}</p>
-            <p>{card.country}</p>
-            <p>{card.gender}</p>
-            <p>{card.date}</p>
-          </div>
-        ))}
       </>
     );
   }
