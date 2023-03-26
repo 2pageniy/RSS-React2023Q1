@@ -7,7 +7,8 @@ import { restrictCharacters } from './lib/restrict-characters';
 const dataCard = {
   img: '',
   title: 'privet',
-  creator: 'denis',
+  gender: 'denis',
+  country: 'Russia',
   tags: ['design', 'graphic'],
   date: '22/03/26',
 };
@@ -24,7 +25,8 @@ describe('card', () => {
       <Card
         img={dataCard.img}
         title={dataCard.title}
-        creator={dataCard.creator}
+        gender={dataCard.gender}
+        country={dataCard.country}
         tags={dataCard.tags}
         date={dataCard.date}
       />
@@ -51,7 +53,7 @@ describe('card', () => {
 
   test('should match fields of the object data', () => {
     expect(title.textContent).toBe(dataCard.title);
-    expect(name.textContent).toBe(dataCard.creator);
+    expect(name.textContent).toBe(dataCard.gender);
     expect(tags.textContent).toBe(restrictCharacters(dataCard.tags));
     expect(date.textContent).toBe(`Added on ${dataCard.date}`);
   });

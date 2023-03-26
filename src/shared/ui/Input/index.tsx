@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import cl from './style.module.css';
 import { InputProps } from './interface';
 
-export const Input: FC<InputProps> = ({ inputRef, upText, rightText, ...props }) => {
+export const Input: FC<InputProps> = ({ inputRef, upText, rightText, warningText, ...props }) => {
   return (
     <label className={cl.label}>
       {upText && (
@@ -20,6 +20,12 @@ export const Input: FC<InputProps> = ({ inputRef, upText, rightText, ...props })
         data-testid={'input'}
       />
       {rightText || ''}
+      {warningText && (
+        <>
+          <br />
+          <span className={cl.warning}>{warningText}</span>
+        </>
+      )}
     </label>
   );
 };
