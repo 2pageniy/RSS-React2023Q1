@@ -1,18 +1,11 @@
-import React, { Component } from 'react';
+import React, { FC } from 'react';
 import cl from './style.module.css';
 import { ButtonProps } from './interface';
 
-export class Button extends Component<ButtonProps> {
-  render() {
-    return (
-      <button
-        type={this.props.type || 'button'}
-        className={cl.btn}
-        onClick={this.props.onClick}
-        data-testid={'btn'}
-      >
-        {this.props.children}
-      </button>
-    );
-  }
-}
+export const Button: FC<ButtonProps> = ({ type, onClick, children }) => {
+  return (
+    <button type={type || 'button'} className={cl.btn} onClick={onClick} data-testid={'btn'}>
+      {children}
+    </button>
+  );
+};

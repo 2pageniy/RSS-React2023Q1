@@ -1,40 +1,37 @@
-import React, { Component } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Button, Input } from '../../../shared/ui';
 import cl from './style.module.css';
-import { SearchBarProps } from '../interface';
 
-export class SearchBar extends Component<Record<string, never>, SearchBarProps> {
-  state = {
-    searchText: '',
+export const SearchBar: FC = () => {
+  const [searchText, setSearchText] = useState('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
   };
 
-  componentDidMount() {
+  const handleClick = () => {
+    console.log(searchText);
+  };
+
+  useEffect(() => {
     const localSearchBar = localStorage.getItem('searchBar');
     if (localSearchBar) {
-      this.setState({ searchText: localSearchBar });
+      setSearchText(localSearchBar);
     }
-  }
+  }, []);
 
-  componentWillUnmount() {
-    localStorage.setItem('searchBar', this.state.searchText);
-  }
+  useEffect(() => {
+    return () => {
+      localStorage.setItem('searchBar', searchText);
+    };
+  }, [searchText]);
 
-  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ searchText: e.target.value });
-  };
-
-  handleClick = () => {
-    console.log(this.state.searchText);
-  };
-
-  render() {
-    return (
-      <div className={cl['search-bar']} data-testid={'search-bar'}>
-        <Input placeholder="Search" value={this.state.searchText} onChange={this.handleChange} />
-        <Button onClick={this.handleClick}>Search</Button>
-      </div>
-    );
-  }
-}
+  return (
+    <div className={cl['search-bar']} data-testid={'search-bar'}>
+      <Input placeholder="Search" value={searchText} onChange={handleChange} />
+      <Button onClick={handleClick}>Search</Button>
+    </div>
+  );
+};
 
 export default SearchBar;

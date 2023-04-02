@@ -13,7 +13,3 @@ export interface ValidFields {
   agreement: boolean;
   image: boolean;
 }
-
-export interface FormCardState {
-  valid: ValidFields;
-}

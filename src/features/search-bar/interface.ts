@@ -1,3 +1,3 @@
-export interface SearchBarProps {
+export interface SearchBarState {
   searchText: string;
 }
