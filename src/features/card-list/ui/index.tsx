@@ -7,9 +7,9 @@ import { CardListProps } from '../interface';
 export const CardList: FC<CardListProps> = ({ cards }) => {
   return (
     <div className={cl['card-list']} data-testid="card-list">
-      {(cards === undefined ? cardList : cards).map((card) => (
+      {(cards === undefined ? cardList : cards).map((card, index) => (
         <Card
-          key={card.date}
+          key={index}
           img={card.img}
           title={card.title}
           gender={card.gender}

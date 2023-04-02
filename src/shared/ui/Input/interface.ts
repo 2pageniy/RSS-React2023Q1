@@ -7,5 +7,4 @@ export interface InputProps {
   warningText?: string;
   upText?: string;
   placeholder?: string;
-  inputRef?: React.RefObject<HTMLInputElement> | null;
 }

@@ -1,147 +1,121 @@
-import React, { FC, createRef, useState } from 'react';
+import React, { FC } from 'react';
 import { Button, Input } from '../../../shared/ui';
 import cl from './style.module.css';
-import { FormCardProps, ValidFields } from '../interface';
+import { FormCardProps } from '../interface';
 import { ICard } from '../../../entities/card/interface';
-import { useForm } from 'react-hook-form';
-
-interface IFormInput {
-  title: string;
-  date: string;
-  country: string;
-}
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { IFormValues } from '../../../shared/types/interface';
 
 export const FormCard: FC<FormCardProps> = ({ addCard }) => {
-  const { register, handleSubmit } = useForm<IFormInput>();
-  const [valid, setValid] = useState<ValidFields>({
-    title: true,
-    date: true,
-    gender: true,
-    tags: true,
-    agreement: true,
-    image: true,
-  });
-
-  const inputTitle = createRef<HTMLInputElement>();
-  const inputDate = createRef<HTMLInputElement>();
-  const inputTags = createRef<HTMLParagraphElement>();
-  const select = createRef<HTMLSelectElement>();
-  const inputAgreement = createRef<HTMLInputElement>();
-  const inputGenderMale = createRef<HTMLInputElement>();
-  const inputGenderFemale = createRef<HTMLInputElement>();
-  const inputImage = createRef<HTMLInputElement>();
-
-  const submitForm = (e: React.FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
-    const title = (inputTitle.current as HTMLInputElement).value;
-    const date = (inputDate.current as HTMLInputElement).value;
-    const country = (select.current as HTMLSelectElement).value;
-    const genderMale = (inputGenderMale.current as HTMLInputElement).checked;
-    const genderFemale = (inputGenderFemale.current as HTMLInputElement).checked;
-    const gender = genderMale ? 'Male' : 'Female';
-    const agreement = (inputAgreement.current as HTMLInputElement).checked;
-    const image = ((inputImage.current as HTMLInputElement).files as FileList)[0];
-    const blockTags = inputTags.current as HTMLParagraphElement;
-    const tags: string[] = [];
-
-    console.log(date);
-
-    for (let i = 1; i < blockTags.children.length; i++) {
-      const currentLabel = blockTags.children[i] as HTMLLabelElement;
-      if ((currentLabel.children[0] as HTMLInputElement).checked) {
-        tags.push(currentLabel.textContent || '');
-      }
-    }
-
-    const validFields: ValidFields = {
-      title: title.length > 2,
-      date: !!date,
-      gender: genderMale || genderFemale,
-      tags: !!tags.length,
-      agreement: agreement,
-      image: !!image && image.type.slice(0, 5) === 'image',
-    };
-
-    setValid(validFields);
-    for (const key in validFields) {
-      if (!validFields[key]) {
-        return;
-      }
-    }
-
-    e.currentTarget.reset();
-    alert('The card was created successfully');
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<IFormValues>();
+  const onSubmit: SubmitHandler<IFormValues> = ({
+    title,
+    date,
+    country,
+    gender,
+    tags,
+    img,
+  }: IFormValues) => {
     const newCard: ICard = {
       title,
       date,
       country,
       gender,
       tags,
-      img: window.URL.createObjectURL(image),
+      img: window.URL.createObjectURL(img[0]),
     };
 
     addCard(newCard);
+    reset();
   };
 
   return (
     <>
-      <form onSubmit={submitForm} className={cl.form} data-testid="form">
+      <form onSubmit={handleSubmit(onSubmit)} className={cl.form} data-testid="form">
         <Input
           placeholder={'Title...'}
-          inputRef={inputTitle}
+          {...register('title', { required: true, minLength: 3 })}
           upText={'Title:'}
-          warningText={valid.title ? '' : 'The title field must be more than 2 characters long'}
+          warningText={errors.title && 'The title field must be more than 2 characters long'}
         />
         <Input
           type="date"
           placeholder="date"
-          inputRef={inputDate}
+          {...register('date', { required: true })}
           upText={'Date added:'}
-          warningText={valid.date ? '' : 'The date must be valid'}
+          warningText={errors.date && 'The date must be valid'}
         />
         <p>
           <label>
             Choose a country: <br />
-            <select name="country" id="country" ref={select} data-testid="select">
-              <option value="russia">Russia</option>
-              <option value="usa">USA</option>
-              <option value="china">China</option>
-              <option value="japan">Japan</option>
+            <select id="country" {...register('country', { required: true })} data-testid="select">
+              <option value="Russia">Russia</option>
+              <option value="USA">USA</option>
+              <option value="China">China</option>
+              <option value="Japan">Japan</option>
             </select>
           </label>
         </p>
         Choose a gender:
-        <Input type="radio" name="gender" inputRef={inputGenderMale} rightText={'Male'} />
         <Input
           type="radio"
-          name="gender"
-          inputRef={inputGenderFemale}
-          rightText={'Female'}
-          warningText={valid.gender ? '' : 'Choose your gender'}
+          {...register('gender', { required: true })}
+          value="Male"
+          rightText={'Male'}
         />
-        <p ref={inputTags}>
+        <Input
+          type="radio"
+          {...register('gender')}
+          value="Female"
+          rightText={'Female'}
+          warningText={errors.gender && 'Choose your gender'}
+        />
+        <p>
           Choose tags:
           <br />
-          <Input type="checkbox" rightText={'Art Design'} />
-          <Input type="checkbox" rightText={'Animation'} />
-          <Input type="checkbox" rightText={'Photography'} />
           <Input
             type="checkbox"
+            {...register('tags', { required: true })}
+            value="Art Design"
+            rightText={'Art Design'}
+          />
+          <Input type="checkbox" {...register('tags')} value="Animation" rightText={'Animation'} />
+          <Input
+            type="checkbox"
+            {...register('tags')}
+            value="Photography"
+            rightText={'Photography'}
+          />
+          <Input
+            type="checkbox"
+            {...register('tags')}
+            value="Illustration"
             rightText={'Illustration'}
-            warningText={valid.tags ? '' : 'Select at least 1 tag'}
+            warningText={errors.tags && 'Select at least 1 tag'}
           />
         </p>
         <Input
           type="file"
-          inputRef={inputImage}
+          {...register('img', {
+            required: true,
+            validate: {
+              acceptedFormats: (files) =>
+                ['image/jpeg', 'image/png', 'image/gif'].includes(files[0]?.type),
+            },
+          })}
           upText={'Upload image:'}
-          warningText={valid.image ? '' : 'Need to upload a photo'}
+          warningText={errors.img && 'Need to upload a photo'}
         />
         <Input
           type="checkbox"
-          inputRef={inputAgreement}
+          {...register('agreement', { required: true })}
           rightText="I won't be upset that no one will see these cards"
-          warningText={valid.agreement ? '' : 'Agree to the terms'}
+          warningText={errors.agreement && 'This field is required'}
         />
         <Button type="submit">Submit</Button>
       </form>

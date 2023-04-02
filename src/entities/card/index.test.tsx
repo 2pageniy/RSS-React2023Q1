@@ -58,3 +58,15 @@ describe('card', () => {
     expect(date.textContent).toBe(`Added on ${dataCard.date}`);
   });
 });
+
+describe('restrict characters', () => {
+  test('s kaifom', () => {
+    const tags = ['Art deisgun', 'animation', 'privet', 'kad dela'];
+    expect(restrictCharacters(tags)).toEqual('Art deisgun, animation, privet, kad dela');
+  });
+
+  test('bez kaifom', () => {
+    const tags = ['Art deisgun', 'animation', 'privet', 'kad dela', 'zdarovchik', 'ny ladno'];
+    expect(restrictCharacters(tags)).toEqual('Art deisgun, animation, privet, kad dela...');
+  });
+});

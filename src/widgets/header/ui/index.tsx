@@ -8,7 +8,7 @@ import { RoutesEnum } from '../../../shared/const/routes';
 export const Header: FC<HeaderProps> = ({ path }) => {
   return (
     <header className={cl.header}>
-      <h1>{findPath(path)}</h1>
+      <h1 data-testid={'head'}>{findPath(path)}</h1>
       <nav className={cl.nav}>
         <NavLink className={({ isActive }) => (isActive ? cl.active : '')} to={RoutesEnum.Main}>
           Main
