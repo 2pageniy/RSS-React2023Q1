@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Main from './main';
+import Main from './Main';
 import AboutUs from './about-us';
 import NotFound from './not-found';
 import Form from './form';

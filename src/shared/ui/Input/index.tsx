@@ -1,13 +1,13 @@
 import React from 'react';
 import cl from './style.module.css';
-import { InputProps } from './interface';
 import { UseFormRegister } from 'react-hook-form';
 import { IFormValues } from '../../../shared/types/interface';
+import { InputProps } from './interface';
 
 export const Input = React.forwardRef<
   HTMLInputElement,
-  InputProps & ReturnType<UseFormRegister<IFormValues>>
->(({ upText, rightText, warningText, ...props }, ref) => {
+  InputProps & Partial<ReturnType<UseFormRegister<IFormValues>>>
+>(({ upText, rightText, warningText, handler, ...props }, ref) => {
   return (
     <label className={cl.label}>
       {upText && (
@@ -20,7 +20,7 @@ export const Input = React.forwardRef<
         type={props.type || 'text'}
         className={cl.input}
         {...props}
-        onChange={props.onChange}
+        onChange={handler}
         ref={ref}
         data-testid={'input'}
       />

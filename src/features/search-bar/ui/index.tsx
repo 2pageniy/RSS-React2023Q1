@@ -28,7 +28,7 @@ export const SearchBar: FC = () => {
 
   return (
     <div className={cl['search-bar']} data-testid={'search-bar'}>
-      <Input placeholder="Search" value={searchText} onChange={handleChange} />
+      <Input placeholder="Search" value={searchText} handler={handleChange} />
       <Button onClick={handleClick}>Search</Button>
     </div>
   );
