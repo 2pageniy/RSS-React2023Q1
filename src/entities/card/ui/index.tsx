@@ -19,10 +19,10 @@ export const Card: FC<ICard> = ({ img, title, gender, country, tags, date }) => 
           {` from ${country}`}
         </p>
         <p className={cl.tags} data-testid={'card-tags'}>
-          {restrictCharacters(tags)}
+          Episode: {restrictCharacters(tags)}
         </p>
         <p className={cl.date} data-testid={'card-date'}>
-          Added on {date}
+          Added on {date.slice(0, 10)}
         </p>
       </div>
     </section>
