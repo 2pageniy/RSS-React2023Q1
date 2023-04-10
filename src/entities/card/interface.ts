@@ -1,8 +1,8 @@
 export interface ICard {
-  img: string;
-  title: string;
-  gender: string;
-  country: string;
-  tags: string[];
-  date: string;
+  image: string;
+  name: string;
+  species: string;
+  location: string;
+  episode: string[];
+  created: string;
 }

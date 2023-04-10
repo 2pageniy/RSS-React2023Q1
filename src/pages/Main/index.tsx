@@ -1,11 +1,10 @@
 import React, { FC } from 'react';
-import { CardList, SearchBar } from '../../features';
+import SearchCards from '../../widgets/search-cards/ui';
 
 export const Main: FC = () => {
   return (
     <div>
-      <SearchBar />
-      <CardList />
+      <SearchCards />
     </div>
   );
 };

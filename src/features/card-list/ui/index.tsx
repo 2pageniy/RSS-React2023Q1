@@ -1,24 +1,28 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Card } from '../../../entities';
+import { Card, MiniCard } from '../../../entities';
 import cl from './style.module.css';
 import { CardListProps } from '../interface';
+import { api } from '../api';
+import { Loader } from '../../../shared/ui';
+import { ICard } from 'entities/card/interface';
+
+interface cardram {
+  name: string;
+  image: string;
+  episode: string[];
+  location: { name: string };
+  created: string;
+  species: string;
+}
 
 export const CardList: FC<CardListProps> = ({ cards }) => {
-  const [cardList, setCardList] = useState<
-    {
-      name: string;
-      image: string;
-      episode: string[];
-      location: { name: string };
-      created: string;
-      species: string;
-    }[]
-  >([]);
+  const [cardList, setCardList] = useState<cardram[]>([]);
+  const [currentCard, setCurrentCard] = useState<cardram | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchingCard() {
-      const res = await fetch('https://rickandmortyapi.com/api/character');
+      const res = await fetch(api);
       const json = await res.json();
       const result = json.results;
       setCardList(result);
@@ -27,27 +31,46 @@ export const CardList: FC<CardListProps> = ({ cards }) => {
     fetchingCard();
   }, []);
 
-  useEffect(() => {
-    console.log(cardList, loading);
-  }, [cardList, loading]);
+  const handleClick = (index: number) => {
+    console.log(index);
+    setCurrentCard(cardList[index]);
+  };
 
   if (loading) {
-    return <h1>loading...</h1>;
+    return <Loader />;
   }
 
   return (
     <div className={cl['card-list']} data-testid="card-list">
-      {cardList.map((card, index) => (
-        <Card
-          key={index}
-          img={card.image}
-          title={card.name}
-          gender={card.species}
-          country={card.location.name}
-          tags={card.episode}
-          date={card.created}
-        />
-      ))}
+      {cards
+        ? cards.map((card, index) => (
+            <Card
+              key={index}
+              image={card.image}
+              name={card.name}
+              species={card.species}
+              location={card.location}
+              episode={card.episode}
+              created={card.created}
+            />
+          ))
+        : cardList.map((card, index) => (
+            <div key={index} onClick={() => handleClick(index)}>
+              <MiniCard image={card.image} name={card.name} />
+            </div>
+          ))}
+      {currentCard && (
+        <div className={cl.modal}>
+          <Card
+            image={currentCard.image}
+            name={currentCard.name}
+            species={currentCard.species}
+            location={currentCard.location.name}
+            episode={currentCard.episode}
+            created={currentCard.created}
+          />
+        </div>
+      )}
     </div>
   );
 };
