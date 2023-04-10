@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
-import SearchCards from '../../widgets/search-cards/ui';
+import { SearchCards } from '../../widgets';
 
 export const Main: FC = () => {
   return (
-    <div>
+    <>
       <SearchCards />
-    </div>
+    </>
   );
 };
 

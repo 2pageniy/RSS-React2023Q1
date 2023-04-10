@@ -1,6 +1,6 @@
 import React from 'react';
-import { describe, test } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, test, vitest } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { SearchBar } from './';
 
 describe('search bar', () => {
@@ -8,7 +8,8 @@ describe('search bar', () => {
   let input: HTMLInputElement;
   let btn: HTMLButtonElement;
   beforeEach(() => {
-    render(<SearchBar />);
+    const fn = vitest.fn;
+    render(<SearchBar handleSearch={fn} />);
     searchBar = screen.getByTestId('search-bar');
     input = screen.getByTestId('input');
     btn = screen.getByTestId('btn');
@@ -18,5 +19,11 @@ describe('search bar', () => {
     expect(searchBar).toBeInTheDocument();
     expect(input).toBeInTheDocument();
     expect(btn).toBeInTheDocument();
+  });
+
+  test('type to search bar', () => {
+    const randomString = `${+new Date()}`;
+    fireEvent.change(input, { target: { value: randomString } });
+    expect(input.value).toBe(randomString);
   });
 });

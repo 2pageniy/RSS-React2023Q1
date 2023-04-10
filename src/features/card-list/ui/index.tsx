@@ -67,14 +67,14 @@ export const CardList: FC<CardListProps> = ({ cards, searchName }) => {
             </div>
           ))}
       {currentCard && (
-        <div className={cl.modal} onClick={handleCloseModal}>
+        <div className={cl.modal} onClick={handleCloseModal} data-testid="modal">
           <div className={cl['wrapper-card']} onClick={(e) => e.stopPropagation()}>
             <Card
               image={currentCard.image}
               name={currentCard.name}
               species={currentCard.species}
               location={currentCard.location.name}
-              episode={currentCard.episode}
+              episode={currentCard.episode.map((i) => i.slice(40))}
               created={currentCard.created}
             />
             <img
@@ -82,6 +82,7 @@ export const CardList: FC<CardListProps> = ({ cards, searchName }) => {
               className={cl['icon-close']}
               src={imgClose}
               alt="close icon"
+              data-testid="icon-close"
             />
           </div>
         </div>
