@@ -2,7 +2,11 @@ import React, { FC, useEffect, useState } from 'react';
 import { Button, Input } from '../../../shared/ui';
 import cl from './style.module.css';
 
-export const SearchBar: FC = () => {
+interface SearchBarProps {
+  handleSearch: (searchText: string) => void;
+}
+
+export const SearchBar: FC<SearchBarProps> = ({ handleSearch }) => {
   const [searchText, setSearchText] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -10,7 +14,7 @@ export const SearchBar: FC = () => {
   };
 
   const handleClick = () => {
-    console.log(searchText);
+    handleSearch(searchText);
   };
 
   useEffect(() => {

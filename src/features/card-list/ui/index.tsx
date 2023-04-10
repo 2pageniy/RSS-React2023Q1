@@ -1,40 +1,47 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Card, MiniCard } from '../../../entities';
 import cl from './style.module.css';
-import { CardListProps } from '../interface';
-import { api } from '../api';
+import { CardListProps, ICardRaM } from '../interface';
+import { fetchCharacters, searchCharacter } from '../api';
 import { Loader } from '../../../shared/ui';
-import { ICard } from 'entities/card/interface';
+import imgClose from '../assets/close.png';
 
-interface cardram {
-  name: string;
-  image: string;
-  episode: string[];
-  location: { name: string };
-  created: string;
-  species: string;
-}
-
-export const CardList: FC<CardListProps> = ({ cards }) => {
-  const [cardList, setCardList] = useState<cardram[]>([]);
-  const [currentCard, setCurrentCard] = useState<cardram | null>(null);
+export const CardList: FC<CardListProps> = ({ cards, searchName }) => {
+  const [cardList, setCardList] = useState<ICardRaM[]>([]);
+  const [currentCard, setCurrentCard] = useState<ICardRaM | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    async function fetchingCard() {
-      const res = await fetch(api);
-      const json = await res.json();
-      const result = json.results;
-      setCardList(result);
+  const fetch = () => {
+    setLoading(true);
+    fetchCharacters().then((res) => {
+      setCardList(res);
       setLoading(false);
-    }
-    fetchingCard();
-  }, []);
+    });
+  };
 
   const handleClick = (index: number) => {
-    console.log(index);
     setCurrentCard(cardList[index]);
   };
+
+  const handleCloseModal = () => {
+    setCurrentCard(null);
+  };
+
+  useEffect(() => {
+    fetch();
+  }, []);
+
+  useEffect(() => {
+    if (searchName) {
+      setLoading(true);
+      searchCharacter(searchName).then((res) => {
+        setCardList(res);
+        setLoading(false);
+      });
+    } else if (searchName === '') {
+      fetch();
+    }
+  }, [searchName]);
 
   if (loading) {
     return <Loader />;
@@ -60,15 +67,23 @@ export const CardList: FC<CardListProps> = ({ cards }) => {
             </div>
           ))}
       {currentCard && (
-        <div className={cl.modal}>
-          <Card
-            image={currentCard.image}
-            name={currentCard.name}
-            species={currentCard.species}
-            location={currentCard.location.name}
-            episode={currentCard.episode}
-            created={currentCard.created}
-          />
+        <div className={cl.modal} onClick={handleCloseModal}>
+          <div className={cl['wrapper-card']} onClick={(e) => e.stopPropagation()}>
+            <Card
+              image={currentCard.image}
+              name={currentCard.name}
+              species={currentCard.species}
+              location={currentCard.location.name}
+              episode={currentCard.episode}
+              created={currentCard.created}
+            />
+            <img
+              onClick={handleCloseModal}
+              className={cl['icon-close']}
+              src={imgClose}
+              alt="close icon"
+            />
+          </div>
         </div>
       )}
     </div>
