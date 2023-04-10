@@ -49,23 +49,27 @@ export const CardList: FC<CardListProps> = ({ cards, searchName }) => {
 
   return (
     <div className={cl['card-list']} data-testid="card-list">
-      {cards
-        ? cards.map((card, index) => (
-            <Card
-              key={index}
-              image={card.image}
-              name={card.name}
-              species={card.species}
-              location={card.location}
-              episode={card.episode}
-              created={card.created}
-            />
-          ))
-        : cardList.map((card, index) => (
-            <div key={index} onClick={() => handleClick(index)}>
-              <MiniCard image={card.image} name={card.name} />
-            </div>
-          ))}
+      {cards ? (
+        cards.map((card, index) => (
+          <Card
+            key={index}
+            image={card.image}
+            name={card.name}
+            species={card.species}
+            location={card.location}
+            episode={card.episode}
+            created={card.created}
+          />
+        ))
+      ) : cardList.length !== 0 ? (
+        cardList.map((card, index) => (
+          <div key={index} onClick={() => handleClick(index)}>
+            <MiniCard image={card.image} name={card.name} />
+          </div>
+        ))
+      ) : (
+        <h3>Not found cards</h3>
+      )}
       {currentCard && (
         <div className={cl.modal} onClick={handleCloseModal} data-testid="modal">
           <div className={cl['wrapper-card']} onClick={(e) => e.stopPropagation()}>
