@@ -1,12 +1,11 @@
 import React, { FC } from 'react';
-import { CardList, SearchBar } from '../../features';
+import { SearchCards } from '../../widgets';
 
 export const Main: FC = () => {
   return (
-    <div>
-      <SearchBar />
-      <CardList />
-    </div>
+    <>
+      <SearchCards />
+    </>
   );
 };
 

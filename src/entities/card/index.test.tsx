@@ -23,12 +23,12 @@ describe('card', () => {
   beforeEach(() => {
     render(
       <Card
-        img={dataCard.img}
-        title={dataCard.title}
-        gender={dataCard.gender}
-        country={dataCard.country}
-        tags={dataCard.tags}
-        date={dataCard.date}
+        image={dataCard.img}
+        name={dataCard.title}
+        species={dataCard.gender}
+        location={dataCard.country}
+        episode={dataCard.tags}
+        created={dataCard.date}
       />
     );
     card = screen.getByTestId('card-section');
@@ -54,7 +54,7 @@ describe('card', () => {
   test('should match fields of the object data', () => {
     expect(title.textContent).toBe(dataCard.title);
     expect(name.textContent).toBe(dataCard.gender);
-    expect(tags.textContent).toBe(restrictCharacters(dataCard.tags));
+    expect(tags.textContent).toBe(`Episode: ${restrictCharacters(dataCard.tags)}`);
     expect(date.textContent).toBe(`Added on ${dataCard.date}`);
   });
 });
