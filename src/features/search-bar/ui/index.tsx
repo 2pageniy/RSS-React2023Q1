@@ -13,7 +13,8 @@ export const SearchBar: FC<SearchBarProps> = ({ handleSearch }) => {
     setSearchText(e.target.value);
   };
 
-  const handleClick = () => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     handleSearch(searchText);
   };
 
@@ -21,6 +22,7 @@ export const SearchBar: FC<SearchBarProps> = ({ handleSearch }) => {
     const localSearchBar = localStorage.getItem('searchBar');
     if (localSearchBar) {
       setSearchText(localSearchBar);
+      handleSearch(localSearchBar);
     }
   }, []);
 
@@ -31,10 +33,10 @@ export const SearchBar: FC<SearchBarProps> = ({ handleSearch }) => {
   }, [searchText]);
 
   return (
-    <div className={cl['search-bar']} data-testid={'search-bar'}>
+    <form className={cl['search-bar']} data-testid={'search-bar'} onSubmit={handleSubmit}>
       <Input placeholder="Search" value={searchText} handler={handleChange} />
-      <Button onClick={handleClick}>Search</Button>
-    </div>
+      <Button type="submit">Search</Button>
+    </form>
   );
 };
 
