@@ -1,12 +1,15 @@
 import React, { FC } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { Button, Input } from '../../../shared/ui';
 import cl from './style.module.css';
-import { FormCardProps } from '../interface';
-import { ICard } from '../../../entities/card/interface';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { formCardsSlice } from '../reducer/formCardsSlice';
+import { useAppDispatch } from '../../../shared/hooks/redux';
 import { IFormValues } from '../../../shared/types/interface';
+import { ICard } from '../../../entities/card/interface';
 
-export const FormCard: FC<FormCardProps> = ({ addCard }) => {
+export const FormCard: FC = () => {
+  const { addCard } = formCardsSlice.actions;
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -30,7 +33,7 @@ export const FormCard: FC<FormCardProps> = ({ addCard }) => {
       image: window.URL.createObjectURL(image[0]),
     };
 
-    addCard(newCard);
+    dispatch(addCard(newCard));
     reset();
   };
 

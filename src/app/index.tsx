@@ -1,18 +1,20 @@
-import React, { Component } from 'react';
+import React, { FC } from 'react';
+import { Provider } from 'react-redux';
 import { Header } from '../widgets';
 import Routing from '../pages';
-import './index.css';
 import { withRouter, WithRouterProps } from './providers/with-router';
+import './index.css';
+import { setupStore } from './model/store/store';
 
-class App extends Component<WithRouterProps> {
-  render() {
-    return (
-      <>
-        <Header path={this.props.location.pathname} />
-        <Routing />
-      </>
-    );
-  }
-}
+const store = setupStore();
+
+const App: FC<WithRouterProps> = ({ location }) => {
+  return (
+    <Provider store={store}>
+      <Header path={location.pathname} />
+      <Routing />
+    </Provider>
+  );
+};
 
 export default withRouter(App);

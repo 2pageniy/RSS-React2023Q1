@@ -1,18 +1,15 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { CardList, FormCard } from '../../../features';
 import { ICard } from '../../../entities/card/interface';
+import { useAppSelector } from '../../../shared/hooks/redux';
 
 export const MainForm: FC = () => {
-  const [cards, setCards] = useState<ICard[]>([]);
-
-  const addCard = (card: ICard) => {
-    setCards((prev) => [...prev, card]);
-  };
+  const formCards: ICard[] = useAppSelector((state) => state.formCardsReducer.cards);
 
   return (
     <>
-      <FormCard addCard={addCard} />
-      <CardList cards={cards} />
+      <FormCard />
+      <CardList cards={formCards} />
     </>
   );
 };

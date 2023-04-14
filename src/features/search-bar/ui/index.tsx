@@ -1,36 +1,26 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Button, Input } from '../../../shared/ui';
 import cl from './style.module.css';
+import { searchBarSlice } from '../reducer/searchBarSlice';
+import { useAppDispatch, useAppSelector } from '../../../shared/hooks/redux';
 
-interface SearchBarProps {
-  handleSearch: (searchText: string) => void;
-}
-
-export const SearchBar: FC<SearchBarProps> = ({ handleSearch }) => {
-  const [searchText, setSearchText] = useState('');
+export const SearchBar: FC = () => {
+  const dispatch = useAppDispatch();
+  const searchText = useAppSelector((state) => state.searchBarReducer.searchText);
+  const { changeSearch, changeSearchName } = searchBarSlice.actions;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
+    dispatch(changeSearch(e.target.value));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    handleSearch(searchText);
+    dispatch(changeSearchName());
   };
 
   useEffect(() => {
-    const localSearchBar = localStorage.getItem('searchBar');
-    if (localSearchBar) {
-      setSearchText(localSearchBar);
-      handleSearch(localSearchBar);
-    }
+    dispatch(changeSearchName());
   }, []);
-
-  useEffect(() => {
-    return () => {
-      localStorage.setItem('searchBar', searchText);
-    };
-  }, [searchText]);
 
   return (
     <form className={cl['search-bar']} data-testid={'search-bar'} onSubmit={handleSubmit}>
