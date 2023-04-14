@@ -54,7 +54,7 @@ describe('card', () => {
   test('should match fields of the object data', () => {
     expect(title.textContent).toBe(dataCard.title);
     expect(name.textContent).toBe(dataCard.gender);
-    expect(tags.textContent).toBe(`Episode: ${restrictCharacters(dataCard.tags)}`);
+    expect(tags.textContent).toBe(restrictCharacters(dataCard.tags));
     expect(date.textContent).toBe(`Added on ${dataCard.date}`);
   });
 });

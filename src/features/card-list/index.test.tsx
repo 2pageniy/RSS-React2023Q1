@@ -2,12 +2,20 @@ import React from 'react';
 import { describe, test } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { CardList } from './';
+import { Provider } from 'react-redux';
+import { setupStore } from '../../app/model/store/store';
+
+const store = setupStore();
 
 describe('card list', () => {
   let cardList: Promise<HTMLDivElement>;
   let card: Promise<HTMLElement[]>;
   beforeEach(() => {
-    render(<CardList />);
+    render(
+      <Provider store={store}>
+        <CardList />
+      </Provider>
+    );
     card = screen.findAllByTestId('card-mini-section');
     cardList = screen.findByTestId('card-list');
   });
