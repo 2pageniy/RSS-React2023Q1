@@ -1,9 +1,9 @@
 export interface IFormValues {
-  title: string;
-  date: string;
-  country: string;
+  name: string;
+  created: string;
+  location: string;
   gender: string;
   agreement: boolean;
   tags: string[];
-  img: FileList;
+  image: FileList;
 }

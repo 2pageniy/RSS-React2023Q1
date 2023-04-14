@@ -14,20 +14,20 @@ export const FormCard: FC<FormCardProps> = ({ addCard }) => {
     formState: { errors },
   } = useForm<IFormValues>();
   const onSubmit: SubmitHandler<IFormValues> = ({
-    title,
-    date,
-    country,
+    name,
+    created,
+    location,
     gender,
     tags,
-    img,
+    image,
   }: IFormValues) => {
     const newCard: ICard = {
-      title,
-      date,
-      country,
-      gender,
-      tags,
-      img: window.URL.createObjectURL(img[0]),
+      name,
+      created,
+      location,
+      species: gender,
+      episode: tags,
+      image: window.URL.createObjectURL(image[0]),
     };
 
     addCard(newCard);
@@ -38,22 +38,26 @@ export const FormCard: FC<FormCardProps> = ({ addCard }) => {
     <>
       <form onSubmit={handleSubmit(onSubmit)} className={cl.form} data-testid="form">
         <Input
-          placeholder={'Title...'}
-          {...register('title', { required: true, minLength: 3 })}
-          upText={'Title:'}
-          warningText={errors.title && 'The title field must be more than 2 characters long'}
+          placeholder={'Name...'}
+          {...register('name', { required: true, minLength: 3 })}
+          upText={'Name:'}
+          warningText={errors.name && 'The name field must be more than 2 characters long'}
         />
         <Input
           type="date"
-          placeholder="date"
-          {...register('date', { required: true })}
+          placeholder="Created"
+          {...register('created', { required: true })}
           upText={'Date added:'}
-          warningText={errors.date && 'The date must be valid'}
+          warningText={errors.created && 'The date must be valid'}
         />
         <p>
           <label>
             Choose a country: <br />
-            <select id="country" {...register('country', { required: true })} data-testid="select">
+            <select
+              id="location"
+              {...register('location', { required: true })}
+              data-testid="select"
+            >
               <option value="Russia">Russia</option>
               <option value="USA">USA</option>
               <option value="China">China</option>
@@ -101,7 +105,7 @@ export const FormCard: FC<FormCardProps> = ({ addCard }) => {
         </p>
         <Input
           type="file"
-          {...register('img', {
+          {...register('image', {
             required: true,
             validate: {
               acceptedFormats: (files) =>
@@ -109,7 +113,7 @@ export const FormCard: FC<FormCardProps> = ({ addCard }) => {
             },
           })}
           upText={'Upload image:'}
-          warningText={errors.img && 'Need to upload a photo'}
+          warningText={errors.image && 'Need to upload a photo'}
         />
         <Input
           type="checkbox"

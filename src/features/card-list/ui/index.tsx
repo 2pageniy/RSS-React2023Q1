@@ -78,7 +78,7 @@ export const CardList: FC<CardListProps> = ({ cards, searchName }) => {
               name={currentCard.name}
               species={currentCard.species}
               location={currentCard.location.name}
-              episode={currentCard.episode.map((i) => i.slice(40))}
+              episode={['Episode', ...currentCard.episode.map((i) => i.slice(40))]}
               created={currentCard.created}
             />
             <img
