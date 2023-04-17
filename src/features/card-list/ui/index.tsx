@@ -1,52 +1,32 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Card, MiniCard } from '../../../entities';
-import cl from './style.module.css';
-import { CardListProps, ICardRaM } from '../interface';
-import { fetchCharacters, searchCharacter } from '../api';
 import { Loader } from '../../../shared/ui';
+import cl from './style.module.css';
 import imgClose from '../assets/close.png';
+import { cardAPI } from '../services/CardService';
+import { CardListProps, ICardRaM } from '../interface';
 
 export const CardList: FC<CardListProps> = ({ cards, searchName }) => {
-  const [cardList, setCardList] = useState<ICardRaM[]>([]);
   const [currentCard, setCurrentCard] = useState<ICardRaM | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  const fetch = () => {
-    setLoading(true);
-    fetchCharacters().then((res) => {
-      setCardList(res);
-      setLoading(false);
-    });
-  };
+  const {
+    data: { results: cardList } = { results: [] },
+    isLoading,
+    error,
+  } = cardAPI.useFetchAllCharactersQuery(searchName || '');
 
   const handleClick = (index: number) => {
-    setCurrentCard(cardList[index]);
+    if (cardList) {
+      setCurrentCard(cardList[index]);
+    }
   };
 
   const handleCloseModal = () => {
     setCurrentCard(null);
   };
 
-  useEffect(() => {
-    fetch();
-  }, []);
-
-  useEffect(() => {
-    if (searchName) {
-      setLoading(true);
-      searchCharacter(searchName).then((res) => {
-        setCardList(res);
-        setLoading(false);
-      });
-    } else if (searchName === '') {
-      fetch();
-    }
-  }, [searchName]);
-
-  if (loading) {
+  if (isLoading) {
     return <Loader />;
   }
-
   return (
     <div className={cl['card-list']} data-testid="card-list">
       {cards ? (
@@ -61,7 +41,7 @@ export const CardList: FC<CardListProps> = ({ cards, searchName }) => {
             created={card.created}
           />
         ))
-      ) : cardList.length !== 0 ? (
+      ) : !error && cardList.length !== 0 ? (
         cardList.map((card, index) => (
           <div key={index} onClick={() => handleClick(index)}>
             <MiniCard image={card.image} name={card.name} />
@@ -78,7 +58,7 @@ export const CardList: FC<CardListProps> = ({ cards, searchName }) => {
               name={currentCard.name}
               species={currentCard.species}
               location={currentCard.location.name}
-              episode={currentCard.episode.map((i) => i.slice(40))}
+              episode={['Episode', ...currentCard.episode.map((i) => i.slice(40))]}
               created={currentCard.created}
             />
             <img

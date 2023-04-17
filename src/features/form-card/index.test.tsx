@@ -1,15 +1,22 @@
 import React from 'react';
-import { describe, test, vi } from 'vitest';
+import { describe, test } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { FormCard } from './';
+import { Provider } from 'react-redux';
+import { setupStore } from '../../app/model/store/store';
+
+const store = setupStore();
 
 describe('form card', () => {
   let form: HTMLFormElement;
   let inputs: HTMLInputElement[];
   let select: HTMLSelectElement;
   beforeEach(() => {
-    const fn = vi.fn();
-    render(<FormCard addCard={fn} />);
+    render(
+      <Provider store={store}>
+        <FormCard />
+      </Provider>
+    );
     form = screen.getByTestId('form');
     inputs = screen.getAllByTestId('input');
     select = screen.getByTestId('select');

@@ -19,7 +19,7 @@ export const Card: FC<ICard> = ({ image, name, species, location, episode, creat
           {` from ${location}`}
         </p>
         <p className={cl.tags} data-testid={'card-tags'}>
-          Episode: {restrictCharacters(episode)}
+          {restrictCharacters(episode)}
         </p>
         <p className={cl.date} data-testid={'card-date'}>
           Added on {created.slice(0, 10)}

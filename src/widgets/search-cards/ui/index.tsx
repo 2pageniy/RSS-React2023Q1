@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { CardList, SearchBar } from '../../../features';
+import { useAppSelector } from '../../../shared/hooks/redux';
 
 export const SearchCards = () => {
-  const [searchName, setSearchName] = useState('');
-  const handleSearch = (search: string) => {
-    setSearchName(search);
-  };
+  const searchName = useAppSelector((state) => state.searchBarReducer.searchName);
 
   return (
     <>
-      <SearchBar handleSearch={handleSearch} />
+      <SearchBar />
       <CardList searchName={searchName} />
     </>
   );
