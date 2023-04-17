@@ -1,5 +1,5 @@
 import React from 'react';
-import { describe, test, vitest } from 'vitest';
+import { describe, test } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { SearchBar } from './';
 import { setupStore } from '../../app/model/store/store';

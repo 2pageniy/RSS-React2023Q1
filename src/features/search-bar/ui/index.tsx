@@ -20,7 +20,7 @@ export const SearchBar: FC = () => {
 
   useEffect(() => {
     dispatch(changeSearchName());
-  }, []);
+  }, [changeSearchName, dispatch]);
 
   return (
     <form className={cl['search-bar']} data-testid={'search-bar'} onSubmit={handleSubmit}>

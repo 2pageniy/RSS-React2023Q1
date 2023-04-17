@@ -8,9 +8,11 @@ import { CardListProps, ICardRaM } from '../interface';
 
 export const CardList: FC<CardListProps> = ({ cards, searchName }) => {
   const [currentCard, setCurrentCard] = useState<ICardRaM | null>(null);
-  const { data: { results: cardList } = {}, isLoading } = cardAPI.useFetchAllCharactersQuery(
-    searchName || ''
-  );
+  const {
+    data: { results: cardList } = { results: [] },
+    isLoading,
+    error,
+  } = cardAPI.useFetchAllCharactersQuery(searchName || '');
 
   const handleClick = (index: number) => {
     if (cardList) {
@@ -25,7 +27,6 @@ export const CardList: FC<CardListProps> = ({ cards, searchName }) => {
   if (isLoading) {
     return <Loader />;
   }
-
   return (
     <div className={cl['card-list']} data-testid="card-list">
       {cards ? (
@@ -40,7 +41,7 @@ export const CardList: FC<CardListProps> = ({ cards, searchName }) => {
             created={card.created}
           />
         ))
-      ) : cardList && cardList.length !== 0 ? (
+      ) : !error && cardList.length !== 0 ? (
         cardList.map((card, index) => (
           <div key={index} onClick={() => handleClick(index)}>
             <MiniCard image={card.image} name={card.name} />
